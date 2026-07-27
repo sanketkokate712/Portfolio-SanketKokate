@@ -89,3 +89,4 @@ export const useTyping = (socket: Socket | null, currentUser: { name: string } |
     getTypingText
   };
 };
+

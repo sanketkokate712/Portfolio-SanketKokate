@@ -188,3 +188,4 @@ export const EditProfileModal = ({
     document.body
   );
 };
+

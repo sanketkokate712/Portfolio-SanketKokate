@@ -48,15 +48,9 @@ const HeroSection = () => {
                 <BlurIn delay={1}>
                   <Tooltip delayDuration={300}>
                     <TooltipTrigger asChild>
-                      <h1
-                        className={cn(
-                          "-ml-[6px] leading-none text-transparent text-slate-800 text-left",
-                          "font-bold text-7xl md:text-7xl lg:text-8xl xl:text-9xl",
-                          "cursor-default text-edge-outline font-display "
-                        )}
-                      >
+                      <h1 className="-ml-[6px] leading-none text-white text-left font-bold text-7xl md:text-7xl lg:text-8xl xl:text-9xl cursor-default text-edge-outline font-display">
                         {config.author.split(" ")[0]}
-                        <br className="md:block hiidden" />
+                        <br className="md:block hidden" />
                         {config.author.split(" ")[1]}
                       </h1>
                     </TooltipTrigger>
@@ -76,63 +70,57 @@ const HeroSection = () => {
                       "cursor-default sm:text-xl md:text-xl whitespace-nowrap bg-clip-text flex items-center gap-1.5"
                     )}
                   >
-                    Full Stack Developer
+                    A Full Stack Web Developer
                   </div>
                 </BlurIn>
               </div>
-              <div className="mt-8 flex flex-col gap-3 w-fit">
-                <BoxReveal delay={2} width="100%" >
-                  <Button asChild className="flex items-center gap-2 w-full">
-                    <Link href="/resume">
-                      <File size={24} />
-                      <p>Resume</p>
-                    </Link>
-                  </Button>
-                </BoxReveal>
-                <div className="md:self-start flex gap-3">
-                  <Tooltip delayDuration={300}>
-                    <TooltipTrigger asChild>
-                      <Button
-                        asChild
-                        variant={"outline"}
-                        className="block w-full overflow-hidden"
-                      >
-                        <Link href={"#contact"}>
-                          Hire Me
-                        </Link>
+              <BlurIn delay={1.5}>
+                <div className="mt-8 flex flex-col gap-3 w-fit z-50 relative">
+                  <Link href={"/resume"} target="_blank" className="flex-1">
+                    <BoxReveal delay={2} width="100%">
+                      <Button className="flex items-center gap-2 w-full">
+                        <File size={24} />
+                        <p>Resume</p>
                       </Button>
-                    </TooltipTrigger>
-                    <TooltipContent side="bottom">
-                      <p>pls 🥹 🙏</p>
-                    </TooltipContent>
-                  </Tooltip>
-                  <div className="flex items-center h-full gap-2">
-                    <Button asChild variant={"outline"}>
+                    </BoxReveal>
+                  </Link>
+                  <div className="flex items-center gap-3 w-full">
+                    <Tooltip delayDuration={300}>
+                      <TooltipTrigger asChild>
+                        <Link href={"#contact"}>
+                          <Button variant={"outline"} className="block w-full overflow-hidden">
+                            Hire Me
+                          </Button>
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom">
+                        <p>pls 🥹 🙏</p>
+                      </TooltipContent>
+                    </Tooltip>
+                    
+                    <div className="flex items-center h-full gap-2">
+                      {/* Twitter / X */}
                       <Link href={config.social.twitter} target="_blank">
-                        <SiX size={24} />
+                        <Button variant={"outline"}>
+                          <SiX size={24} />
+                        </Button>
                       </Link>
-                    </Button>
-                    <Button asChild variant={"outline"}>
-                      <Link
-                        href={config.social.github}
-                        target="_blank"
-                        className="cursor-can-hover"
-                      >
-                        <SiGithub size={24} />
+                      {/* GitHub */}
+                      <Link href={config.social.github} target="_blank" className="cursor-can-hover">
+                        <Button variant={"outline"}>
+                          <SiGithub size={24} />
+                        </Button>
                       </Link>
-                    </Button>
-                    <Button asChild variant={"outline"}>
-                      <Link
-                        href={config.social.linkedin}
-                        target="_blank"
-                        className="cursor-can-hover"
-                      >
-                        <SiLinkedin size={24} />
+                      {/* LinkedIn */}
+                      <Link href={config.social.linkedin} target="_blank" className="cursor-can-hover">
+                        <Button variant={"outline"}>
+                          <SiLinkedin size={24} />
+                        </Button>
                       </Link>
-                    </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </BlurIn>
             </div>
           )}
         </div>
@@ -146,3 +134,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+

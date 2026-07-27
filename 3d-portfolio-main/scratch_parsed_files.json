@@ -1,0 +1,90 @@
+[
+  {
+    "path": "app/resume/page.tsx",
+    "size": 288
+  },
+  {
+    "path": "app/resume/resume-view.tsx",
+    "size": 2574
+  },
+  {
+    "path": "app/resume/resume-doodle.tsx",
+    "size": 7410
+  },
+  {
+    "path": "components/sections/hero.tsx",
+    "size": 6028
+  },
+  {
+    "path": "contexts/socketio.tsx",
+    "size": 9309
+  },
+  {
+    "path": "components/realtime/online-users.tsx",
+    "size": 15300
+  },
+  {
+    "path": "components/realtime/components/admin-badge.tsx",
+    "size": 308
+  },
+  {
+    "path": "components/realtime/components/admin-password-dialog.tsx",
+    "size": 3300
+  },
+  {
+    "path": "components/realtime/components/chat-input.tsx",
+    "size": 8887
+  },
+  {
+    "path": "components/realtime/components/chat-message-list.tsx",
+    "size": 19311
+  },
+  {
+    "path": "components/realtime/components/edit-profile-modal.tsx",
+    "size": 6693
+  },
+  {
+    "path": "components/realtime/components/message-reactions.tsx",
+    "size": 3056
+  },
+  {
+    "path": "components/realtime/components/quoted-message.tsx",
+    "size": 1271
+  },
+  {
+    "path": "components/realtime/components/reaction-picker.tsx",
+    "size": 1811
+  },
+  {
+    "path": "components/realtime/components/reply-preview.tsx",
+    "size": 1081
+  },
+  {
+    "path": "components/realtime/components/slash-command-menu.tsx",
+    "size": 3567
+  },
+  {
+    "path": "components/realtime/components/system-message.tsx",
+    "size": 4061
+  },
+  {
+    "path": "components/realtime/components/user-list.tsx",
+    "size": 5441
+  },
+  {
+    "path": "components/realtime/hooks/use-chat-scroll.ts",
+    "size": 3453
+  },
+  {
+    "path": "components/realtime/hooks/use-connection-status.ts",
+    "size": 1224
+  },
+  {
+    "path": "components/realtime/hooks/use-sounds.ts",
+    "size": 6234
+  },
+  {
+    "path": "components/realtime/hooks/use-typing.ts",
+    "size": 3191
+  }
+]

@@ -79,3 +79,4 @@ export const MessageReactions = ({ reactions, currentSessionId, onToggle, onPick
     </TooltipProvider>
   );
 };
+

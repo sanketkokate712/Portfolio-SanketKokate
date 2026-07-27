@@ -37,3 +37,4 @@ export const QuotedMessage = ({ username, content, color, avatar, onClickQuote }
     </button>
   );
 };
+

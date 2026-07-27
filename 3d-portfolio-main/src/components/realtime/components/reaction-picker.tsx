@@ -60,3 +60,4 @@ export const ReactionPicker = ({ onReact, open: controlledOpen, onOpenChange }: 
     </div>
   );
 };
+

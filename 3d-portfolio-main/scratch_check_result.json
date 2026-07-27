@@ -1,0 +1,27 @@
+{
+  "modify": [
+    "app/resume/page.tsx",
+    "app/resume/resume-view.tsx",
+    "app/resume/resume-doodle.tsx",
+    "components/sections/hero.tsx",
+    "contexts/socketio.tsx",
+    "components/realtime/online-users.tsx",
+    "components/realtime/components/admin-badge.tsx",
+    "components/realtime/components/admin-password-dialog.tsx",
+    "components/realtime/components/chat-input.tsx",
+    "components/realtime/components/chat-message-list.tsx",
+    "components/realtime/components/edit-profile-modal.tsx",
+    "components/realtime/components/message-reactions.tsx",
+    "components/realtime/components/quoted-message.tsx",
+    "components/realtime/components/reaction-picker.tsx",
+    "components/realtime/components/reply-preview.tsx",
+    "components/realtime/components/slash-command-menu.tsx",
+    "components/realtime/components/system-message.tsx",
+    "components/realtime/components/user-list.tsx",
+    "components/realtime/hooks/use-chat-scroll.ts",
+    "components/realtime/hooks/use-connection-status.ts",
+    "components/realtime/hooks/use-sounds.ts",
+    "components/realtime/hooks/use-typing.ts"
+  ],
+  "new": []
+}

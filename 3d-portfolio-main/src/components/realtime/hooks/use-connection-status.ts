@@ -35,3 +35,4 @@ export const useConnectionStatus = (socket: Socket | null): ConnectionStatus => 
 
   return status;
 };
+

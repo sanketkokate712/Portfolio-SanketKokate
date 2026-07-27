@@ -99,3 +99,4 @@ export const processSlashCommand = (text: string): ProcessedCommand => {
 
   return { type: "message", content: text };
 };
+

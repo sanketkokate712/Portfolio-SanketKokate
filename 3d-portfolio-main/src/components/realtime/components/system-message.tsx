@@ -96,3 +96,4 @@ export const SystemMessageRow = ({ users }: SystemMessageProps) => {
     </LayoutGroup>
   );
 };
+

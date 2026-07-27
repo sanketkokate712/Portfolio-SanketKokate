@@ -265,3 +265,4 @@ export const ChatInput = ({ onSendMessage, onTyping, placeholder = "Message", re
     </div>
   );
 };
+

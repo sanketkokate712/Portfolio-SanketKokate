@@ -100,3 +100,4 @@ export const useChatScroll = (isOpen: boolean, msgsLength: number, currentUserId
     isAtBottomRef
   };
 };
+

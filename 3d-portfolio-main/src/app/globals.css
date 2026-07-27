@@ -242,3 +242,9 @@ body > canvas {
     scroll-behavior: auto !important;
   }
 }
+
+@layer utilities {
+  .text-edge-outline {
+    -webkit-text-stroke: 1px hsl(var(--foreground) / 0.5);
+  }
+}

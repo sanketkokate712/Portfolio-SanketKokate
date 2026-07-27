@@ -96,3 +96,4 @@ export const AdminPasswordDialog = ({ isOpen, onClose, onSubmit }: AdminPassword
     document.body,
   );
 };
+
