@@ -41,7 +41,7 @@ export const MessageReactions = ({ reactions, currentSessionId, onToggle, onPick
                   className={cn(
                     "flex items-center gap-1 px-1.5 py-0.5 rounded-md text-xs border transition-colors",
                     isMine
-                      ? "border-[#5865f2]/60 bg-[#5865f2]/15"
+                      ? "border-violet-500/60 bg-violet-500/15"
                       : cn("border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5", THEME.bg.itemHover),
                   )}
                   onMouseDown={(e) => {
@@ -50,7 +50,7 @@ export const MessageReactions = ({ reactions, currentSessionId, onToggle, onPick
                   }}
                 >
                   <span className="text-sm leading-none">{r.emoji}</span>
-                  <span className={cn("text-[11px] font-medium leading-none", isMine ? "text-[#5865f2]" : THEME.text.secondary)}>
+                  <span className={cn("text-[11px] font-medium leading-none", isMine ? "text-violet-500" : THEME.text.secondary)}>
                     {r.sessionIds.length}
                   </span>
                 </button>

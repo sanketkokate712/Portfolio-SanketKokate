@@ -13,7 +13,7 @@ export const ReplyPreview = ({ username, content, onCancel }: ReplyPreviewProps)
   const truncated = content.length > 50 ? content.slice(0, 50) + "…" : content;
 
   return (
-    <div className={cn("flex items-center gap-2 px-3 py-1.5 border-l-2 border-[#5865f2] rounded-t-lg", THEME.bg.tertiary)}>
+    <div className={cn("flex items-center gap-2 px-3 py-1.5 border-l-2 border-violet-500 rounded-t-lg", THEME.bg.tertiary)}>
       <div className="flex-1 min-w-0">
         <span className={cn("text-xs font-semibold", THEME.text.header)}>
           Replying to {username}

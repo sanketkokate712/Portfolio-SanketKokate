@@ -76,14 +76,14 @@ const HeroSection = () => {
               </div>
               <BlurIn delay={1.5}>
                 <div className="mt-8 flex flex-col gap-3 w-fit z-50 relative">
-                  <Link href={"/resume"} target="_blank" className="flex-1">
+                  <a href={"/assets/seo/Sanket_Kokate__Resume.pdf"} download="Sanket_Kokate_Resume.pdf" target="_blank" rel="noopener noreferrer" className="flex-1">
                     <BoxReveal delay={2} width="100%">
                       <Button className="flex items-center gap-2 w-full">
                         <File size={24} />
                         <p>Resume</p>
                       </Button>
                     </BoxReveal>
-                  </Link>
+                  </a>
                   <div className="flex items-center gap-3 w-full">
                     <Tooltip delayDuration={300}>
                       <TooltipTrigger asChild>

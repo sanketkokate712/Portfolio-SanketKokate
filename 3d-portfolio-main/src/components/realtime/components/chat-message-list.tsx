@@ -147,8 +147,8 @@ export const ChatMessageList = ({
     const el = document.getElementById(`msg-${msgId}`);
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "center" });
-      el.classList.add("bg-[#5865f2]/10");
-      setTimeout(() => el.classList.remove("bg-[#5865f2]/10"), 1500);
+      el.classList.add("bg-violet-500/20");
+      setTimeout(() => el.classList.remove("bg-violet-500/20"), 1500);
     }
   };
 
@@ -321,7 +321,7 @@ export const ChatMessageList = ({
                         <span>{msg.flag}</span>
                         {profile?.isAdmin && <AdminBadge />}
                         {isMe && (
-                          <span className="bg-[#5865f2] text-white text-[10px] px-1 rounded font-bold">YOU</span>
+                          <span className="bg-violet-500 text-white text-[10px] px-1 rounded font-bold">YOU</span>
                         )}
                         <span className={cn("text-xs", THEME.text.secondary)}>
                           {formatMessageTime(msgDate)}
@@ -432,7 +432,7 @@ export const ChatMessageList = ({
             className={cn(
               "absolute bottom-20 left-1/2 -translate-x-1/2 z-10",
               "flex items-center gap-2 px-3 py-1.5 rounded-full shadow-lg",
-              "bg-[#5865f2] hover:bg-[#4752c4] text-white transition-colors",
+              "bg-violet-500 hover:bg-violet-600 text-white transition-colors",
               "text-xs font-bold cursor-pointer"
             )}
           >

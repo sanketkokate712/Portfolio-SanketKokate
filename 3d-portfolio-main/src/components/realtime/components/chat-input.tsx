@@ -200,7 +200,7 @@ export const ChatInput = ({ onSendMessage, onTyping, placeholder = "Message", re
       {editTarget && (
         <div className={cn(
           "flex items-center gap-2 px-3 py-2 rounded-t-lg text-xs font-medium",
-          "bg-[#5865f2]/10 text-[#5865f2] dark:text-[#8891f2]",
+          "bg-violet-500/10 text-violet-600 dark:text-violet-400",
         )}>
           <span>Editing message</span>
           <span className={cn("ml-auto text-[10px]", THEME.text.secondary)}>
@@ -244,7 +244,7 @@ export const ChatInput = ({ onSendMessage, onTyping, placeholder = "Message", re
             <Button
               size="icon"
               variant="ghost"
-              className="h-7 w-7 shrink-0 text-[#5865f2] hover:bg-[#5865f2]/10"
+              className="h-7 w-7 shrink-0 text-violet-500 hover:bg-violet-500/10"
               onClick={handleSend}
               title="Save edit"
             >

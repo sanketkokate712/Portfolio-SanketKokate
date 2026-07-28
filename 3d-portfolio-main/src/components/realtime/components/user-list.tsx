@@ -127,7 +127,7 @@ const UserItem = ({
                 {user.name}
               </span>
               {user.isAdmin && <AdminBadge />}
-              {isMe && <span className="bg-[#5865f2] text-white text-[10px] px-1 rounded font-bold">YOU</span>}
+              {isMe && <span className="bg-violet-500 text-white text-[10px] px-1 rounded font-bold">YOU</span>}
             </div>
             {isMe ? (
               <Button variant={'ghost'} size={'icon'} className="w-5 h-5">

@@ -76,7 +76,7 @@ export const EditProfileModal = ({
         transition={{ type: "spring", bounce: 0.2, duration: 0.3 }}
         className={cn(
           "w-[400px] h-[600px] max-h-[85vh] p-4 rounded-xl shadow-2xl flex flex-col",
-          "bg-white dark:bg-[#2b2d31] border border-white/10",
+          "bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-white/20 dark:border-white/10",
           "ring-1 ring-black/5 dark:ring-white/10"
         )}
         onClick={(e) => e.stopPropagation()}
@@ -87,7 +87,7 @@ export const EditProfileModal = ({
             <img
               src={getAvatarUrl(avatarSeed)}
               alt="Preview"
-              className="w-12 h-12 rounded-full ring-2 ring-offset-2 ring-offset-white dark:ring-offset-[#2b2d31]"
+              className="w-12 h-12 rounded-full ring-2 ring-offset-2 ring-offset-transparent"
               style={{ backgroundColor: color, "--tw-ring-color": color } as React.CSSProperties}
             />
           </div>
@@ -127,7 +127,7 @@ export const EditProfileModal = ({
                   className={cn(
                     "rounded-full p-0.5 transition-all hover:scale-105 aspect-square",
                     avatarSeed === seed
-                      ? "bg-[#5865f2] ring-2 ring-[#5865f2] scale-105"
+                      ? "bg-violet-500 ring-2 ring-violet-500 scale-105"
                       : "hover:bg-black/10 dark:hover:bg-white/10"
                   )}
                   onClick={() => setAvatarSeed(seed)}
@@ -156,7 +156,7 @@ export const EditProfileModal = ({
                 key={c}
                 className={cn(
                   "w-7 h-7 rounded-full transition-all hover:scale-110",
-                  color === c && "ring-2 ring-offset-2 ring-offset-white dark:ring-offset-[#2b2d31] scale-110 shadow-lg"
+                  color === c && "ring-2 ring-offset-2 ring-offset-transparent scale-110 shadow-lg"
                 )}
                 style={{ backgroundColor: c, "--tw-ring-color": c } as React.CSSProperties}
                 onClick={() => setColor(c)}
@@ -178,7 +178,7 @@ export const EditProfileModal = ({
           <Button
             size="sm"
             onClick={handleSave}
-            className="h-8 px-4 text-sm bg-[#5865f2] hover:bg-[#4752c4] text-white"
+            className="h-8 px-4 text-sm bg-violet-500 hover:bg-violet-600 text-white"
           >
             Save Changes
           </Button>

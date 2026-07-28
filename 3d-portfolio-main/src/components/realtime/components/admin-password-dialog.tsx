@@ -47,7 +47,7 @@ export const AdminPasswordDialog = ({ isOpen, onClose, onSubmit }: AdminPassword
         transition={{ type: "spring", bounce: 0.2, duration: 0.3 }}
         className={cn(
           "w-[320px] p-5 rounded-xl shadow-2xl flex flex-col gap-4",
-          "bg-white dark:bg-[#2b2d31] border border-white/10",
+          "bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-white/20 dark:border-white/10",
         )}
         onClick={(e) => e.stopPropagation()}
       >
@@ -66,7 +66,7 @@ export const AdminPasswordDialog = ({ isOpen, onClose, onSubmit }: AdminPassword
             className={cn(
               "w-full px-3 py-2 rounded-lg border text-sm outline-none transition-colors",
               "bg-black/5 dark:bg-black/20 border-black/10 dark:border-white/10",
-              "focus:border-[#5865f2] focus:ring-1 focus:ring-[#5865f2]",
+              "focus:border-violet-500 focus:ring-1 focus:ring-violet-500",
               THEME.text.primary, THEME.text.placeholder,
             )}
             autoComplete="off"
@@ -84,7 +84,7 @@ export const AdminPasswordDialog = ({ isOpen, onClose, onSubmit }: AdminPassword
             <Button
               type="submit"
               size="sm"
-              className="bg-[#5865f2] hover:bg-[#4752c4] text-white"
+              className="bg-violet-500 hover:bg-violet-600 text-white"
               disabled={!password.trim()}
             >
               Authenticate
