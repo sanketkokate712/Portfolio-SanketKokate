@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const TRACKS = [
+  { title: "Live Code Radio (24/7 Lofi)", url: "https://coderadio-admin.freecodecamp.org/radio/8000/radio.mp3" },
   { title: "Creative Focus", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
   { title: "Deep Work Flow", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
   { title: "Late Night Deploy", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
