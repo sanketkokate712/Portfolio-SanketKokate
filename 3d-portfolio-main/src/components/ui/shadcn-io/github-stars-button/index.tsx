@@ -68,8 +68,8 @@ function GitHubStarsButton({
   const [displayParticles, setDisplayParticles] = useState(false);
 
   const repoUrl = useMemo(
-    () => `https://github.com/${username}/${repo}`,
-    [username, repo],
+    () => `https://github.com/${username}`,
+    [username],
   );
 
   useEffect(() => {

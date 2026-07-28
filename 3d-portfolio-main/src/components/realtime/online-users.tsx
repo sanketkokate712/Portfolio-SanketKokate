@@ -191,7 +191,7 @@ const OnlineUsers = () => {
           if (!newOpen) setShowUserList(false)
         }}
       >
-        <div className="flex items-center gap-2" data-no-custom-cursor="true">
+        <div className="flex items-center gap-2">
           {/* Feature 4: "N people here" label */}
           <AnimatePresence>
             {users.length >= 2 && !isOpen && (
@@ -213,7 +213,7 @@ const OnlineUsers = () => {
                   <Button
                     variant="ghost"
                     className={cn(
-                      "mr-4 h-11 w-12 shadow-lg transition-all duration-300 z-50 p-0",
+                      "mr-4 h-11 w-12 shadow-lg transition-all duration-300 z-50 p-0 cursor-can-hover",
                       "bg-background/20 hover:bg-background/80 backdrop-blur-sm border-2 border-white/30 rounded-lg",
                       !isOpen && unreads > 0 && "animate-pulse border-green-500/50"
                     )}
@@ -254,7 +254,7 @@ const OnlineUsers = () => {
 
         <PopoverContent
           className={cn(
-            "w-80 min-h-[400px] sm:w-96 p-0 border-none shadow-2xl overflow-hidden rounded-xl mr-4 mb-4 flex flex-col",
+            "w-72 min-h-[350px] sm:w-80 p-0 border-none shadow-2xl overflow-hidden rounded-xl mr-4 mb-4 flex flex-col",
             THEME.bg.primary,
             THEME.text.primary
           )}
