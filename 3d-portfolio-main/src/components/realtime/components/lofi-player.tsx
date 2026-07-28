@@ -89,7 +89,7 @@ export const LofiPlayer = () => {
         </Button>
       </div>
 
-      <audio ref={audioRef} src={TRACKS[lofiState.trackIndex]?.url} onEnded={nextTrack} />
+      <audio ref={audioRef} src={(TRACKS[lofiState.trackIndex] || TRACKS[0])?.url} />
     </div>
   );
 };
