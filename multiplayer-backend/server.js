@@ -30,6 +30,13 @@ const users = new Map();
 const messages = [];
 const reactions = {}; // Map messageId -> Reaction[]
 
+let lofiState = {
+  isPlaying: false,
+  trackIndex: 0,
+  position: 0,
+  updatedAt: Date.now()
+};
+
 const getRandomColor = () => '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
 const names = [
   'Alice', 'Bob', 'Charlie', 'Dave', 'Eve', 'Frank', 'Grace', 'Heidi', 
@@ -89,6 +96,35 @@ io.on('connection', (socket) => {
   broadcastUsers();
 
   socket.emit('session', { sessionId: socket.id });
+  socket.emit('lofi-state', lofiState);
+
+  socket.on('reaction-spawn', (data) => {
+    socket.broadcast.emit('reaction-spawned', { 
+      ...data, 
+      socketId: socket.id, 
+      id: Date.now().toString() + Math.random().toString(36).substring(7) 
+    });
+  });
+
+  socket.on('lofi-action', (data) => {
+    if (data.type === 'play') {
+      lofiState.isPlaying = true;
+      lofiState.position = data.payload?.position || 0;
+      lofiState.updatedAt = Date.now();
+    } else if (data.type === 'pause') {
+      lofiState.isPlaying = false;
+      lofiState.position = data.payload?.position || 0;
+      lofiState.updatedAt = Date.now();
+    } else if (data.type === 'skip') {
+      lofiState.trackIndex = data.payload?.trackIndex || 0;
+      lofiState.position = 0;
+      lofiState.updatedAt = Date.now();
+    } else if (data.type === 'sync') {
+      lofiState.position = data.payload?.position || 0;
+      lofiState.updatedAt = Date.now();
+    }
+    io.emit('lofi-state', lofiState);
+  });
 
   socket.on('cursor-change', (data) => {
     socket.broadcast.emit('cursor-changed', {

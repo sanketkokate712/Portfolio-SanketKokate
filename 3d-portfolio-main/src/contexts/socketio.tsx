@@ -57,6 +57,21 @@ export type UserProfile = { name: string; avatar: string; color: string; isAdmin
 
 export type CursorPosition = { x: number; y: number };
 
+export interface FloatingReaction {
+  id: string;
+  x: number;
+  y: number;
+  emoji: string;
+  socketId: string;
+}
+
+export interface LofiState {
+  isPlaying: boolean;
+  trackIndex: number;
+  position: number;
+  updatedAt: number;
+}
+
 type SocketContextType = {
   socket: Socket | null;
   users: User[];
@@ -72,6 +87,10 @@ type SocketContextType = {
   fetchOlderMessages: () => void;
   initStatus: "idle" | "loading" | "loaded";
   fetchInitialMessages: () => void;
+  floatingReactions: FloatingReaction[];
+  spawnReaction: (emoji: string, x?: number, y?: number) => void;
+  lofiState: LofiState;
+  sendLofiAction: (type: "play" | "pause" | "skip" | "sync", payload?: any) => void;
 };
 
 const INITIAL_STATE: SocketContextType = {
@@ -89,6 +108,10 @@ const INITIAL_STATE: SocketContextType = {
   fetchOlderMessages: () => { },
   initStatus: "idle",
   fetchInitialMessages: () => { },
+  floatingReactions: [],
+  spawnReaction: () => { },
+  lofiState: { isPlaying: false, trackIndex: 0, position: 0, updatedAt: 0 },
+  sendLofiAction: () => { },
 };
 
 export const SocketContext = createContext<SocketContextType>(INITIAL_STATE);
@@ -106,6 +129,8 @@ const SocketContextProvider = ({ children }: { children: ReactNode }) => {
   const [hasMoreMessages, setHasMoreMessages] = useState(true);
   const [loadingHistory, setLoadingHistory] = useState(false);
   const [initStatus, setInitStatus] = useState<"idle" | "loading" | "loaded">("idle");
+  const [floatingReactions, setFloatingReactions] = useState<FloatingReaction[]>([]);
+  const [lofiState, setLofiState] = useState<LofiState>({ isPlaying: false, trackIndex: 0, position: 0, updatedAt: 0 });
   const socketRef = useRef<Socket | null>(null);
   const initStatusRef = useRef<"idle" | "loading" | "loaded">("idle");
 
@@ -181,6 +206,15 @@ const SocketContextProvider = ({ children }: { children: ReactNode }) => {
         next.set(data.socketId, data.pos);
         return next;
       });
+    });
+    newSocket.on("reaction-spawned", (data: FloatingReaction) => {
+      setFloatingReactions(prev => [...prev, data]);
+      setTimeout(() => {
+        setFloatingReactions(prev => prev.filter(r => r.id !== data.id));
+      }, 3000);
+    });
+    newSocket.on("lofi-state", (state: LofiState) => {
+      setLofiState(state);
     });
     newSocket.on("msgs-receive-init", (msgs) => {
       setMsgs(msgs);
@@ -267,12 +301,60 @@ const SocketContextProvider = ({ children }: { children: ReactNode }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const spawnReaction = useCallback((emoji: string, x?: number, y?: number) => {
+    const s = socketRef.current;
+    if (!s) return;
+    const posX = x !== undefined ? x : window.innerWidth / 2 + (Math.random() * 100 - 50);
+    const posY = y !== undefined ? y : window.innerHeight - 100;
+    
+    const data: FloatingReaction = { 
+      emoji, 
+      x: posX, 
+      y: posY, 
+      id: Date.now().toString() + Math.random().toString(), 
+      socketId: s.id || '' 
+    };
+    
+    setFloatingReactions(prev => [...prev, data]);
+    setTimeout(() => {
+      setFloatingReactions(prev => prev.filter(r => r.id !== data.id));
+    }, 3000);
+    
+    s.emit("reaction-spawn", { emoji, x: posX, y: posY });
+  }, []);
+
+  const sendLofiAction = useCallback((type: "play" | "pause" | "skip" | "sync", payload?: any) => {
+    const s = socketRef.current;
+    if (!s) return;
+    s.emit("lofi-action", { type, payload });
+  }, []);
+
   return (
-    <SocketContext.Provider value={{ socket, users, setUsers, msgs, reactions, profileMap, cursorPositions, followingId, setFollowingId, hasMoreMessages, loadingHistory, fetchOlderMessages, initStatus, fetchInitialMessages }}>
+    <SocketContext.Provider
+      value={{
+        socket,
+        users,
+        setUsers,
+        msgs,
+        reactions,
+        profileMap,
+        cursorPositions,
+        followingId,
+        setFollowingId,
+        hasMoreMessages,
+        loadingHistory,
+        fetchOlderMessages,
+        initStatus,
+        fetchInitialMessages,
+        floatingReactions,
+        spawnReaction,
+        lofiState,
+        sendLofiAction,
+      }}
+    >
       {children}
     </SocketContext.Provider>
   );
 };
 
 export default SocketContextProvider;
-

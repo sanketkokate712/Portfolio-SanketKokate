@@ -10,6 +10,8 @@ import MotionNudge from "@/components/motion-nudge";
 import DomainNotice from "@/components/domain-notice";
 import Analytics from "@/components/analytics";
 import { usePerfProfile } from "@/hooks/use-perf-profile";
+import { LiveReactions } from "@/components/realtime/components/live-reactions";
+import { LofiPlayer } from "@/components/realtime/components/lofi-player";
 
 export default function AppOverlays() {
   const pathname = usePathname();
@@ -35,6 +37,8 @@ export default function AppOverlays() {
       {isHome && <MotionNudge />}
       <DomainNotice />
       <Analytics />
+      <LiveReactions />
+      <LofiPlayer />
     </>
   );
 }

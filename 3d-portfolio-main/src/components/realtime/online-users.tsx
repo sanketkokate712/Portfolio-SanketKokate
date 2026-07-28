@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState, useEffect, useRef, useCallback } from "react";
+import React, { useContext, useState, useEffect, useRef, useCallback, startTransition } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -159,10 +159,12 @@ const OnlineUsers = () => {
 
   // Feature 6: Keyboard shortcut Ctrl+/ to toggle chat
   const toggleOpen = useCallback(() => {
-    setIsOpen(prev => {
-      if (prev) setShowUserList(false);
-      else fetchInitialMessages();
-      return !prev;
+    startTransition(() => {
+      setIsOpen(prev => {
+        if (prev) setShowUserList(false);
+        else fetchInitialMessages();
+        return !prev;
+      });
     });
   }, [fetchInitialMessages]);
 
@@ -186,9 +188,11 @@ const OnlineUsers = () => {
         onOpenChange={(newOpen) => {
           // Prevent popover from closing while the profile modal is open (clicks outside)
           if (!newOpen && isEditingProfile) return;
-          setIsOpen(newOpen);
-          if (newOpen) fetchInitialMessages();
-          if (!newOpen) setShowUserList(false)
+          startTransition(() => {
+            setIsOpen(newOpen);
+            if (newOpen) fetchInitialMessages();
+            if (!newOpen) setShowUserList(false);
+          });
         }}
       >
         <div className="flex items-center gap-2">

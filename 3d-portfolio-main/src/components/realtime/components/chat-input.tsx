@@ -7,7 +7,8 @@ import { SlashCommandMenu, getFilteredCommands, processSlashCommand } from "./sl
 import type { ProcessedCommand } from "./slash-command-menu";
 import { ReplyPreview } from "./reply-preview";
 import type { SlashCommand } from "./slash-command-menu";
-import type { Message } from "@/contexts/socketio";
+import { SocketContext, type Message } from "@/contexts/socketio";
+import { useContext } from "react";
 
 interface ChatInputProps {
   onSendMessage: (cmd: ProcessedCommand) => void;
@@ -30,6 +31,7 @@ export const ChatInput = ({ onSendMessage, onTyping, placeholder = "Message", re
   const [commandQuery, setCommandQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [rateLimitSeconds, setRateLimitSeconds] = useState(0);
+  const { spawnReaction } = useContext(SocketContext);
 
   useEffect(() => {
     if (!rateLimitedUntil) { setRateLimitSeconds(0); return; }
@@ -181,7 +183,19 @@ export const ChatInput = ({ onSendMessage, onTyping, placeholder = "Message", re
   };
 
   return (
-    <div className={cn("p-4 pt-0", THEME.bg.primary)}>
+    <div className={cn("flex flex-col gap-1 w-full", THEME.bg.secondary)}>
+      <div className="flex gap-2 px-2 pt-1 pb-1 overflow-x-auto no-scrollbar">
+        {["❤️", "🔥", "🚀", "🎉", "👀"].map((emoji) => (
+          <button
+            key={emoji}
+            onClick={() => spawnReaction(emoji)}
+            className="text-lg hover:scale-125 transition-transform cursor-pointer"
+            title={`Send ${emoji} reaction`}
+          >
+            {emoji}
+          </button>
+        ))}
+      </div>
       {replyTarget && !editTarget && onCancelReply && (
         <ReplyPreview
           username={replyTarget.username}
