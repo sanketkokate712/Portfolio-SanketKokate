@@ -4,6 +4,19 @@ import { Server } from 'socket.io';
 import geoip from 'geoip-lite';
 
 const app = express();
+
+app.get('/', (req, res) => {
+  res.send(`
+    <html>
+      <body style="font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: #000; color: #fff;">
+        <h1>🟢 Multiplayer Backend is Live!</h1>
+        <p>This is the hidden server that powers the live cursors and chat.</p>
+        <p>To see your actual portfolio, please visit your <strong>Vercel</strong> URL.</p>
+      </body>
+    </html>
+  `);
+});
+
 const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
