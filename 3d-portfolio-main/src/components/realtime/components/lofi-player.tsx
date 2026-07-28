@@ -9,10 +9,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const TRACKS = [
-  { title: "Live Code Radio (24/7 Lofi)", url: "https://coderadio-admin.freecodecamp.org/radio/8000/radio.mp3" },
-  { title: "Creative Focus", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-  { title: "Deep Work Flow", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
-  { title: "Late Night Deploy", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
+  { title: "Live Lofi Radio", url: "https://coderadio-admin.freecodecamp.org/radio/8000/radio.mp3" }
 ];
 
 export const LofiPlayer = () => {
@@ -67,14 +64,6 @@ export const LofiPlayer = () => {
                 className="h-10 w-10 rounded-full hover:bg-white/10 text-white bg-white/5 border border-white/10"
               >
                 {lofiState.isPlaying ? <Pause size={18} /> : <Play size={18} className="ml-0.5" />}
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={nextTrack}
-                className="h-10 w-10 rounded-full hover:bg-white/10 text-white"
-              >
-                <SkipForward size={18} />
               </Button>
             </div>
             
