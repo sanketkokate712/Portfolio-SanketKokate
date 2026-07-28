@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const TRACKS = [
-  { title: "Live Lofi Radio", url: "https://coderadio-admin.freecodecamp.org/radio/8000/radio.mp3" }
+  { title: "Live Lofi Radio", url: "https://ice1.somafm.com/groovesalad-128-mp3" }
 ];
 
 export const LofiPlayer = () => {
