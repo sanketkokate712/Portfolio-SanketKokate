@@ -86,7 +86,7 @@ export const LofiPlayer = () => {
 
       <div className="relative mt-2">
         {lofiState.isPlaying && (
-          <div className="absolute -inset-2 bg-gradient-to-r from-violet-600 via-fuchsia-500 to-orange-500 rounded-full blur-md animate-pulse opacity-80" />
+          <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 via-sky-300 to-[#fcdbb6] rounded-full blur-md animate-pulse opacity-80" />
         )}
         <Button
           onClick={() => setIsOpen(!isOpen)}
