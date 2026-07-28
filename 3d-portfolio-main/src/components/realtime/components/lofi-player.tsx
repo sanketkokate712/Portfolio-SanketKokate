@@ -23,11 +23,6 @@ export const LofiPlayer = () => {
   useEffect(() => {
     if (!audioRef.current) return;
     
-    // Check if we need to sync track index
-    if (!audioRef.current.src.includes(TRACKS[lofiState.trackIndex]?.url)) {
-      audioRef.current.src = TRACKS[lofiState.trackIndex]?.url;
-    }
-
     // Sync play/pause state
     if (lofiState.isPlaying && hasInteracted) {
       audioRef.current.play().catch(console.error);
@@ -104,7 +99,7 @@ export const LofiPlayer = () => {
         </Button>
       </div>
 
-      <audio ref={audioRef} onEnded={nextTrack} />
+      <audio ref={audioRef} src={TRACKS[lofiState.trackIndex]?.url} onEnded={nextTrack} />
     </div>
   );
 };
