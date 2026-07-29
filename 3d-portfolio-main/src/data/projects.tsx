@@ -5,6 +5,7 @@ import { TypographyH3, TypographyP } from "@/components/ui/typography";
 import { ArrowUpRight, ExternalLink, Link2, MoveUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { YoutubeModal } from "@/components/ui/youtube-modal";
 import { ReactNode } from "react";
 // Spline has no thesvg entry — keep the Three.js mark as its stand-in.
 import { SiThreedotjs } from "react-icons/si";
@@ -370,10 +371,10 @@ const projects: Project[] = [
           </TypographyP>
           <TypographyH3 className="mt-4">📹 Live Previews</TypographyH3>
           <ul className="list-disc pl-6 font-mono space-y-1 mt-2">
-            <li><Link href="https://youtu.be/nfyYunyEw6E" target="_blank" className="underline hover:text-blue-400 transition-colors">Task 1A</Link></li>
-            <li><Link href="https://youtu.be/GeSGxZ04qiM" target="_blank" className="underline hover:text-blue-400 transition-colors">Task 1C</Link></li>
-            <li><Link href="https://youtu.be/YFGI3AeA_yw" target="_blank" className="underline hover:text-blue-400 transition-colors">Task 2A</Link></li>
-            <li><Link href="https://youtu.be/cCsTUzYUChk" target="_blank" className="underline hover:text-blue-400 transition-colors">Task 2B</Link></li>
+            <li><YoutubeModal videoId="nfyYunyEw6E" title="Task 1A Demonstration" triggerText="Task 1A" /></li>
+            <li><YoutubeModal videoId="GeSGxZ04qiM" title="Task 1C Demonstration" triggerText="Task 1C" /></li>
+            <li><YoutubeModal videoId="YFGI3AeA_yw" title="Task 2A Demonstration" triggerText="Task 2A" /></li>
+            <li><YoutubeModal videoId="cCsTUzYUChk" title="Task 2B Demonstration" triggerText="Task 2B" /></li>
           </ul>
           <TypographyH3 className="mt-4">🏅 Achievements</TypographyH3>
           <ul className="list-disc pl-6 font-mono space-y-1 mt-2">
