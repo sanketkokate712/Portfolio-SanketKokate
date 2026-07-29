@@ -148,7 +148,7 @@ const SocketContextProvider = ({ children }: { children: ReactNode }) => {
     if (!s || loadingHistory || !hasMoreMessages) return;
     setMsgs(current => {
       if (current.length === 0) return current;
-      const oldestId = Number(current[0].id);
+      const oldestId = current[0].id;
       if (!oldestId) return current;
       setLoadingHistory(true);
       s.emit("msgs-fetch-history", { before: oldestId });
@@ -207,8 +207,26 @@ const SocketContextProvider = ({ children }: { children: ReactNode }) => {
         return next;
       });
     });
-    newSocket.on("reaction-spawned", (data: FloatingReaction) => {
-      setFloatingReactions(prev => [...prev, data]);
+    newSocket.on("reaction-spawned", (data: any) => {
+      let posX = data.x;
+      let posY = data.y;
+      if (data.px !== undefined && data.py !== undefined) {
+         posX = data.px * window.innerWidth;
+         posY = data.py * window.innerHeight;
+      } else if (posX === undefined || posY === undefined) {
+         posX = window.innerWidth / 2 + (Math.random() * 100 - 50);
+         posY = window.innerHeight - 100;
+      }
+
+      const reactionData: FloatingReaction = {
+        id: data.id,
+        emoji: data.emoji,
+        socketId: data.socketId,
+        x: posX,
+        y: posY
+      };
+
+      setFloatingReactions(prev => [...prev, reactionData]);
       setTimeout(() => {
         setFloatingReactions(prev => prev.filter(r => r.id !== data.id));
       }, 3000);
@@ -320,7 +338,9 @@ const SocketContextProvider = ({ children }: { children: ReactNode }) => {
       setFloatingReactions(prev => prev.filter(r => r.id !== data.id));
     }, 3000);
     
-    s.emit("reaction-spawn", { emoji, x: posX, y: posY });
+    const pctX = posX / window.innerWidth;
+    const pctY = posY / window.innerHeight;
+    s.emit("reaction-spawn", { emoji, px: pctX, py: pctY });
   }, []);
 
   const sendLofiAction = useCallback((type: "play" | "pause" | "skip" | "sync", payload?: any) => {
