@@ -48,7 +48,7 @@ const HeroSection = () => {
                 <BlurIn delay={1}>
                   <Tooltip delayDuration={300}>
                     <TooltipTrigger asChild>
-                      <h1 className="-ml-[6px] leading-none text-white text-left font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl cursor-default font-display">
+                      <h1 className="-ml-[6px] leading-none text-slate-900 dark:text-white text-left font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl cursor-default font-display">
                         {config.author.split(" ")[0]}
                         <br className="md:block hidden" />
                         {config.author.split(" ")[1]}
