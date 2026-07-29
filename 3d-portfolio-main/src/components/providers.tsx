@@ -4,6 +4,8 @@ import { ThemeProvider } from "./theme-provider";
 import { Toaster } from "./ui/toaster";
 
 import { TooltipProvider } from "./ui/tooltip";
+import { YoutubeWindowProvider } from "@/contexts/youtube-windows";
+import { YoutubeWindowManager } from "./ui/youtube-window-manager";
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   return <ThemeProvider
@@ -13,10 +15,13 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
   >
     <Preloader>
       <SocketContextProvider>
-        <TooltipProvider>
-          {children}
-        </TooltipProvider>
-        <Toaster />
+        <YoutubeWindowProvider>
+          <TooltipProvider>
+            {children}
+          </TooltipProvider>
+          <YoutubeWindowManager />
+          <Toaster />
+        </YoutubeWindowProvider>
       </SocketContextProvider>
     </Preloader>
   </ThemeProvider>;
