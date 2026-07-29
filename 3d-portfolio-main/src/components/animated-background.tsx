@@ -444,13 +444,9 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
 
   // Reveal keyboard on load/route change
   useEffect(() => {
-    // Rebuild the URL from the current pathname so the hash is always *replaced*
-    // rather than appended. Using router.push("/" + hash) stacked fragments on
-    // refresh (e.g. "/#skills#skills#skills") because the existing hash in the
-    // address bar was never stripped first. replaceState also avoids polluting
-    // browser history with an entry per scrolled-through section.
-    const hash = activeSection === "hero" ? "" : `#${activeSection}`;
-    const url = window.location.pathname + window.location.search + hash;
+    // Strip the hash from the URL to keep it clean (e.g., removing /#skills)
+    // while still allowing the page to track the active section internally.
+    const url = window.location.pathname + window.location.search;
     window.history.replaceState(window.history.state, "", url);
 
     if (!splineApp || isLoading || keyboardRevealed) return;
