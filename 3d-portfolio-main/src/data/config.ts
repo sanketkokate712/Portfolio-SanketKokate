@@ -1,5 +1,5 @@
 const config = {
-  title: "Sanket Kokate | Full-Stack Developer & Creative Cuber",
+  title: "Sanket Kokate | Full-Stack Developer",
   description: {
     long: "Explore the portfolio of Sanket Kokate, a full-stack developer specializing in interactive web experiences, modern 3D UI, and innovative applications. Discover my work and interactive projects!",
     short:
