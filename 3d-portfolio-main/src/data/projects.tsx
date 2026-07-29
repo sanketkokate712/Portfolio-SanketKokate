@@ -368,6 +368,13 @@ const projects: Project[] = [
           <TypographyP className="font-mono">
             Developed precise kinematics and custom motor control logic for holonomic robots, specifically adapting algorithms for unique left/right front wheel hardware configurations. Integrated Nav2 for path planning and OpenCV for computer vision tasks.
           </TypographyP>
+          <TypographyH3 className="mt-4">📹 Live Previews</TypographyH3>
+          <ul className="list-disc pl-6 font-mono space-y-1 mt-2">
+            <li><Link href="https://youtu.be/nfyYunyEw6E" target="_blank" className="underline hover:text-blue-400 transition-colors">Task 1A</Link></li>
+            <li><Link href="https://youtu.be/GeSGxZ04qiM" target="_blank" className="underline hover:text-blue-400 transition-colors">Task 1C</Link></li>
+            <li><Link href="https://youtu.be/YFGI3AeA_yw" target="_blank" className="underline hover:text-blue-400 transition-colors">Task 2A</Link></li>
+            <li><Link href="https://youtu.be/cCsTUzYUChk" target="_blank" className="underline hover:text-blue-400 transition-colors">Task 2B</Link></li>
+          </ul>
           <TypographyH3 className="mt-4">🏅 Achievements</TypographyH3>
           <ul className="list-disc pl-6 font-mono space-y-1 mt-2">
             <li><strong>All India Rank 3</strong> out of nationwide participating teams</li>
