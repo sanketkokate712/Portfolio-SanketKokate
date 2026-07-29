@@ -38,6 +38,8 @@ export const DraggableYoutubeWindow = ({ windowData }: { windowData: YoutubeWind
       style={{
         position: "fixed",
         zIndex: windowData.zIndex,
+        minWidth: 320,
+        minHeight: isMinimized ? 48 : 200,
         // We set x/y directly on initial, motion takes over
       }}
       onPointerDown={() => focusWindow(windowData.id)}
@@ -45,7 +47,9 @@ export const DraggableYoutubeWindow = ({ windowData }: { windowData: YoutubeWind
         "flex flex-col overflow-hidden rounded-xl shadow-2xl transition-[height,width] duration-300",
         "border border-white/20 dark:border-white/10",
         "bg-white/70 dark:bg-black/60 backdrop-blur-xl", // Glassmorphism
-        isMinimized ? "w-[300px] h-12" : "w-[90vw] max-w-[640px] md:w-[640px]"
+        isMinimized 
+          ? "w-[300px] h-12 !resize-none" 
+          : "w-[90vw] h-[50vw] md:w-[640px] md:h-[360px] resize"
       )}
     >
       {/* Title Bar (Drag Handle) */}
@@ -78,8 +82,8 @@ export const DraggableYoutubeWindow = ({ windowData }: { windowData: YoutubeWind
       {/* Video Content */}
       <div 
         className={cn(
-          "relative w-full aspect-video transition-opacity duration-300",
-          isMinimized ? "opacity-0 pointer-events-none" : "opacity-100"
+          "relative flex-1 w-full h-full transition-opacity duration-300",
+          isMinimized ? "opacity-0 pointer-events-none hidden" : "opacity-100"
         )}
       >
         {/* We keep iframe rendered but hidden so video doesn't restart when minimized */}

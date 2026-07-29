@@ -325,23 +325,43 @@ const projects: Project[] = [
     get content() {
       return (
         <div>
-          <TypographyP className="font-mono text-2xl text-center">
+          <TypographyP className="font-mono text-2xl text-center mb-6">
             Autonomous lunar rover for habitat navigation — SIH Finalist 🏆
           </TypographyP>
-          <TypographyP className="font-mono">
-            Collaborated with Team Vision Luna to engineer an autonomous rover designed specifically for complex lunar habitat navigation and structural maintenance. The rover was built to operate in simulated lunar terrain conditions.
-          </TypographyP>
-          <TypographyP className="font-mono">
-            Spearheaded the implementation of RTAB-Map for Simultaneous Localization and Mapping (SLAM) and successfully managed real-time Digital Twin operations using MATLAB and Gazebo simulation environments.
-          </TypographyP>
-          <TypographyH3 className="mt-4">🏅 Achievements</TypographyH3>
-          <ul className="list-disc pl-6 font-mono space-y-1 mt-2">
-            <li><strong>SIH Grand Finalist</strong> — Reached the grand finale of Smart India Hackathon</li>
-            <li>Interacted directly with <strong>ISRO scientists</strong> during the final presentation</li>
-            <li>Implemented RTAB-Map SLAM for autonomous navigation</li>
-            <li>Managed real-time Digital Twin operations using MATLAB</li>
-            <li>Built with ROS 2, Python, MATLAB, and Gazebo</li>
-          </ul>
+          <div className="flex flex-col xl:flex-row gap-8 items-start">
+            {/* Left side: Content */}
+            <div className="flex-1">
+              <TypographyP className="font-mono">
+                Collaborated with Team Vision Luna to engineer an autonomous rover designed specifically for complex lunar habitat navigation and structural maintenance. The rover was built to operate in simulated lunar terrain conditions.
+              </TypographyP>
+              <TypographyP className="font-mono mt-4">
+                Spearheaded the implementation of RTAB-Map for Simultaneous Localization and Mapping (SLAM) and successfully managed real-time Digital Twin operations using MATLAB and Gazebo simulation environments.
+              </TypographyP>
+              <TypographyH3 className="mt-6">🏅 Achievements</TypographyH3>
+              <ul className="list-disc pl-6 font-mono space-y-1 mt-2">
+                <li><strong>SIH Grand Finalist</strong> — Reached the grand finale of Smart India Hackathon</li>
+                <li>Interacted directly with <strong>ISRO scientists</strong> during the final presentation</li>
+                <li>Implemented RTAB-Map SLAM for autonomous navigation</li>
+                <li>Managed real-time Digital Twin operations using MATLAB</li>
+                <li>Built with ROS 2, Python, MATLAB, and Gazebo</li>
+              </ul>
+            </div>
+            
+            {/* Right side: LinkedIn Post */}
+            <div className="w-full xl:w-[450px] shrink-0">
+              <div className="w-full h-[550px] rounded-2xl border border-white/20 dark:border-white/10 bg-white/40 dark:bg-black/40 backdrop-blur-xl shadow-2xl p-2 flex flex-col">
+                <iframe 
+                  src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7405854682327199745" 
+                  height="100%" 
+                  width="100%" 
+                  frameBorder="0" 
+                  allowFullScreen 
+                  title="Embedded LinkedIn Post"
+                  className="rounded-xl flex-1 bg-white"
+                ></iframe>
+              </div>
+            </div>
+          </div>
         </div>
       );
     },
