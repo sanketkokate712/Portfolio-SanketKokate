@@ -30,8 +30,8 @@ const config = {
     return this.site + "/assets/seo/og-image.png";
   },
   social: {
-    twitter: "https://x.com/sanketkokate",
-    linkedin: "https://www.linkedin.com/in/sanketkokate/",
+    twitter: "https://x.com/Sanketkok712",
+    linkedin: "https://www.linkedin.com/in/sanket-kokate-150b20282/",
     instagram: "https://www.instagram.com/sanketkokate",
     facebook: "https://www.facebook.com/sanketkokate",
     github: "https://github.com/sanketkokate712",
