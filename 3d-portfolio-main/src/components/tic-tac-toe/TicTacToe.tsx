@@ -197,6 +197,10 @@ export default function TicTacToe() {
 
   const hostMatch = () => {
     if (!socket) return;
+    if (!socket.connected) {
+      alert("Cannot host a match: Backend server is disconnected or unreachable.");
+      return;
+    }
     socket.emit('game:host');
   };
 
