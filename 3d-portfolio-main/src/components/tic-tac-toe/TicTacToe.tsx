@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { SocketContext } from '@/contexts/socketio';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { Swords, Loader2, Play, User, Globe, Trophy, Settings } from 'lucide-react';
 import GameChat from './GameChat';
 import confetti from 'canvas-confetti';
@@ -459,7 +459,7 @@ export default function TicTacToe() {
           {/* Game Board */}
           <div className="grid grid-cols-3 gap-2 sm:gap-3 bg-slate-200 dark:bg-slate-800 p-2 sm:p-3 rounded-[2rem] shadow-xl border border-black/5 dark:border-white/5 relative z-10">
             {board.map((cell, idx) => {
-              const isWinningCell = winnerInfo?.line?.includes(idx);
+              const isWinningCell = winnerInfo?.combo?.includes(idx);
               const isEmpty = cell === null;
               
               return (
