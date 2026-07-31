@@ -30,6 +30,26 @@ const users = new Map();
 const messages = [];
 const reactions = {}; // Map messageId -> Reaction[]
 
+const gameRooms = {}; // { roomId: { players: { socketId: { symbol, name } }, spectators: [], board: Array(9), turnId: null, status: 'waiting' | 'playing' | 'over' } }
+
+const checkWinner = (board) => {
+  const lines = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+  ];
+  for (let line of lines) {
+    const [a, b, c] = line;
+    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+      return { winner: board[a], combo: line };
+    }
+  }
+  if (!board.includes(null)) {
+    return { winner: 'draw', combo: [] };
+  }
+  return null;
+};
+
 let lofiState = {
   isPlaying: false,
   trackIndex: 0,
@@ -228,10 +248,229 @@ io.on('connection', (socket) => {
     }
   });
 
+  // --- TIC-TAC-TOE GAME LOGIC ---
+  const broadcastRooms = () => {
+    const waitingRooms = Object.entries(gameRooms)
+      .filter(([_, room]) => room.status === 'waiting' && !room.isPrivate)
+      .map(([roomId, room]) => {
+        const hostId = Object.keys(room.players)[0];
+        return {
+          roomId,
+          host: room.players[hostId],
+        };
+      });
+    io.emit('game:rooms_list', waitingRooms);
+  };
+
+  socket.on('game:get_rooms', () => {
+    const waitingRooms = Object.entries(gameRooms)
+      .filter(([_, room]) => room.status === 'waiting' && !room.isPrivate)
+      .map(([roomId, room]) => {
+        const hostId = Object.keys(room.players)[0];
+        return {
+          roomId,
+          host: room.players[hostId],
+        };
+      });
+    socket.emit('game:rooms_list', waitingRooms);
+  });
+
+  socket.on('game:host', () => {
+    const user = users.get(socket.id);
+    if (!user) return;
+
+    // Generate unique room ID
+    const roomId = 'room_' + Date.now().toString(36) + Math.random().toString(36).substring(2, 5);
+    socket.join(roomId);
+
+    gameRooms[roomId] = {
+      players: {
+        [socket.id]: { symbol: 'X', name: user.name, flag: user.flag, location: user.location, socketId: socket.id }
+      },
+      spectators: [],
+      board: Array(9).fill(null),
+      turnId: null,
+      status: 'waiting',
+      isPrivate: false,
+    };
+
+    socket.emit('game:hosted', { roomId });
+    socket.emit('game:status', { role: 'X', opponent: null, opponentData: null });
+    broadcastRooms();
+  });
+
+  socket.on('game:challenge', ({ roomId }) => {
+    const room = gameRooms[roomId];
+    if (!room || room.status !== 'waiting') {
+      socket.emit('game:error', { message: 'Room is no longer available.' });
+      return;
+    }
+
+    const challenger = users.get(socket.id);
+    if (!challenger) return;
+
+    const hostId = Object.keys(room.players)[0];
+    
+    // Notify host
+    io.to(hostId).emit('game:challenge_received', {
+      challengerId: socket.id,
+      challengerName: challenger.name,
+      challengerFlag: challenger.flag,
+      challengerLocation: challenger.location,
+    });
+  });
+
+  socket.on('game:challenge_response', ({ roomId, challengerId, accept }) => {
+    const room = gameRooms[roomId];
+    if (!room || room.status !== 'waiting') return;
+
+    // Verify it's the host responding
+    const hostId = Object.keys(room.players)[0];
+    if (socket.id !== hostId) return;
+
+    if (accept) {
+      const challenger = users.get(challengerId);
+      if (!challenger) return; // Challenger disconnected
+
+      // Add challenger to room
+      const ioSocket = io.sockets.sockets.get(challengerId);
+      if (ioSocket) ioSocket.join(roomId);
+
+      room.players[challengerId] = { 
+        symbol: 'O', 
+        name: challenger.name, 
+        flag: challenger.flag, 
+        location: challenger.location,
+        socketId: challengerId 
+      };
+      
+      room.turnId = hostId; // X goes first
+      room.status = 'playing';
+
+      // Send status to host
+      socket.emit('game:status', { 
+        role: 'X', 
+        opponent: challenger.name,
+        opponentData: room.players[challengerId]
+      });
+
+      // Send status to challenger
+      io.to(challengerId).emit('game:status', { 
+        role: 'O', 
+        opponent: room.players[hostId].name,
+        opponentData: room.players[hostId]
+      });
+      
+      // Let everyone in the room know the game started
+      io.to(roomId).emit('game:update', { board: room.board, turn: room.turnId });
+      
+      // Update lobby list
+      broadcastRooms();
+    } else {
+      io.to(challengerId).emit('game:challenge_declined', { message: 'The host declined your challenge.' });
+    }
+  });
+
+  socket.on('game:join_spectator', ({ roomId }) => {
+    const room = gameRooms[roomId];
+    if (!room) return;
+    
+    socket.join(roomId);
+    room.spectators.push(socket.id);
+    socket.emit('game:status', { role: 'Spectator', opponent: null, opponentData: null });
+    socket.emit('game:update', { board: room.board, turn: room.turnId });
+  });
+
+  socket.on('player:move', ({ index, roomId }) => {
+    const room = gameRooms[roomId];
+    if (!room || room.status !== 'playing') return;
+
+    if (socket.id === room.turnId && room.board[index] === null) {
+      room.board[index] = room.players[socket.id].symbol;
+
+      const winResult = checkWinner(room.board);
+
+      if (winResult) {
+        room.status = 'over';
+        io.to(roomId).emit('game:over', winResult);
+      } else {
+        const playerIds = Object.keys(room.players);
+        room.turnId = playerIds.find(id => id !== socket.id);
+        io.to(roomId).emit('game:update', { board: room.board, turn: room.turnId });
+      }
+    }
+  });
+
+  socket.on('game:restart', ({ roomId }) => {
+    const room = gameRooms[roomId];
+    if (!room) return;
+    
+    // Only players can restart
+    if (!room.players[socket.id]) return;
+
+    room.board = Array(9).fill(null);
+    room.status = 'playing';
+    const playerIds = Object.keys(room.players);
+    room.turnId = playerIds[0];
+
+    io.to(roomId).emit('game:update', { board: room.board, turn: room.turnId });
+  });
+
+  socket.on('game:leave', ({ roomId }) => {
+      const room = gameRooms[roomId];
+      if (!room) return;
+      socket.leave(roomId);
+      if (room.players[socket.id]) {
+        delete room.players[socket.id];
+        room.status = 'over';
+        socket.to(roomId).emit('opponent:left');
+        if (Object.keys(room.players).length === 0) {
+           delete gameRooms[roomId];
+        }
+        broadcastRooms();
+      } else {
+        room.spectators = room.spectators.filter(id => id !== socket.id);
+      }
+  });
+
+  socket.on('game:chat_send', ({ roomId, content }) => {
+    const user = users.get(socket.id);
+    if (!user) return;
+    const chatMsg = {
+        id: Date.now().toString(),
+        username: user.name,
+        avatar: user.avatar,
+        flag: user.flag,
+        location: user.location,
+        content,
+        timestamp: new Date().toISOString()
+    };
+    io.to(roomId).emit('game:chat_receive', chatMsg);
+  });
+  // ------------------------------
+
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);
     users.delete(socket.id);
     broadcastUsers();
+
+    // Clean up Tic-Tac-Toe rooms
+    for (const roomId in gameRooms) {
+      const room = gameRooms[roomId];
+      if (room.players[socket.id]) {
+        delete room.players[socket.id];
+        room.status = 'over';
+        socket.to(roomId).emit('opponent:left');
+        
+        // If room is empty, delete it
+        if (Object.keys(room.players).length === 0) {
+           delete gameRooms[roomId];
+        }
+        broadcastRooms();
+      } else {
+        room.spectators = room.spectators.filter(id => id !== socket.id);
+      }
+    }
   });
 });
 
